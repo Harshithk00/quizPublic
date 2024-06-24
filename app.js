@@ -7,7 +7,7 @@ import path from "path";
 import { dirname } from "path";
 import flash from "connect-flash"
 import env from "dotenv";
-import createMemoryStore from "memorystore";
+import memorystore from "memorystore";
 import { fileURLToPath } from 'url';
 import {Strategy} from "passport-local";
 import session from "express-session";
@@ -15,7 +15,7 @@ import {questionset1, questionset2, questionset1written, questionset2written} fr
 
 
 
-const MemoryStore = createMemoryStore(session);
+const MemoryStore = memorystore(session);
 
 env.config();
 
@@ -137,7 +137,7 @@ app.get('/dashboard', async(req, res) => {
   //     res.clearCookie("context", { httpOnly: true })
   //     res.render("dashboard",{errtext1});
   // }else{
-  
+    
     res.render("dashboard",{errtext1:req.flash('errtext1')||null});
   // }
   } else {
