@@ -137,6 +137,7 @@ app.get('/dashboard', async(req, res) => {
   //     res.clearCookie("context", { httpOnly: true })
   //     res.render("dashboard",{errtext1});
   // }else{
+  
     res.render("dashboard",{errtext1:req.flash('errtext1')||null});
   // }
   } else {
@@ -172,7 +173,7 @@ app.get('/quiz', async (req, res)=> {
   if(req.isAuthenticated){
 
     
-    
+
     
       
       const checkattempt = await db.query("SELECT attemptedquiz1 FROM users WHERE usn = $1",[req.user.usn])
