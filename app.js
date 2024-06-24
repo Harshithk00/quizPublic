@@ -26,7 +26,7 @@ app.use(session({
   secret: process.env.SESSIONSEC,
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge: 86400000,httpOnly:false},
+  cookie: {maxAge: 86400000,httpOnly:true},
   store: new MemoryStore({
     checkPeriod: 86400000
   }),
