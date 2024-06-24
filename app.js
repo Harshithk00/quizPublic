@@ -26,12 +26,12 @@ app.use(session({
   secret: process.env.SESSIONSEC,
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge: 86400000},
+  cookie: {maxAge: 86400000,httpOnly:false},
   store: new MemoryStore({
-    checkPeriod: 86400000 // prune expired entries every 24h
+    checkPeriod: 86400000
   }),
 }));
-
+ 
 app.use(passport.initialize());
 app.use(passport.session());
 
