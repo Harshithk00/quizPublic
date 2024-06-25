@@ -165,7 +165,7 @@ app.get('/dashboard', async(req, res) => {
  
 app.get('/quiz', async (req, res)=> {
   
-  let currentUser = req.user.usn;
+  try{let currentUser = req.user.name;
   let currentUserSlice3 = currentUser.slice(-3);
   let currentUserUse = zeroPad(currentUserSlice3);
   // console.log(req.user.usn);
@@ -198,17 +198,20 @@ app.get('/quiz', async (req, res)=> {
   }else{
     res.redirect('/');  
   }       
-   
+}catch(e){
+  console.log(e);
+  res.redirect("/")
+}
 })
 
 app.post('/quiz', async (req, res)=>{
-  console.log(`USN: ${req.user.usn}`)
+  try{console.log(`USN: ${req.user.usn}`)
     if(req.isAuthenticated){
     
     const userAnswers = req.body;
     let score = 0;
     
-    let currentUser = req.user.usn;
+    let currentUser = req.user.name;
     let currentUserSlice3 = currentUser.slice(-3);
     let currentUserUse = zeroPad(currentUserSlice3);
     
@@ -236,7 +239,11 @@ app.post('/quiz', async (req, res)=>{
           score++;
         }
          
-      })
+      }
+    
+    )  
+    
+
     }
 
   
@@ -252,14 +259,17 @@ app.post('/quiz', async (req, res)=>{
     }else{
       res.redirect('/');
     }   
-
+  }catch(e){
+    console.log(e);
+    res.redirect("/")
+  }
  
 });
 
 
 app.get("/quiz2", async(req, res)=>{
 
-  let currentUser = req.user.usn;
+  try{let currentUser = req.user.name;
   let currentUserSlice3 = currentUser.slice(-3);
   let currentUserUse = zeroPad(currentUserSlice3);
   const checkattempt = await db.query("SELECT attemptedquiz2 FROM users WHERE usn = $1",[currentUser])
@@ -280,11 +290,15 @@ app.get("/quiz2", async(req, res)=>{
   }else{
     res.redirect("/")
   }
+}catch(e){
+  console.log(e)
+  res.redirect("/")
+}
 })  
 
 app.post('/quiz2', async (req, res)=>{
 
-  console.log(`USN: ${req.user.usn}`)
+  try{console.log(`USN: ${req.user.usn}`)
 
     if(req.isAuthenticated){
         const usn = req.user.usn;
@@ -308,9 +322,12 @@ app.post('/quiz2', async (req, res)=>{
 
     }else{
       res.redirect('/');
+    }}catch(e){
+      console.log(e)
+      res.redirect("/")
     }
- 
-  });
+
+  }); 
 
   // console.log(`${req.user. usn},`);
     // await db.query("UPDATE users SET attemptedquiz1 = 1 WHERE usn= $1;",[req.user.usn])
